@@ -1,27 +1,47 @@
-const Engine = Matter.Engine;
-const World= Matter.World;
-const Bodies = Matter.Bodies;
+var player,playerImg;
+var bg, bgImg, mazeImg;
+var nplayer1, nplayerImg;
 
-var engine, world;
-var box1;
+function preload (){
+    playerImg = loadImage("sprites/playerFront.png");
+    nplayerImg = loadImage("sprites/playerFront.png");
+    bgImg = loadImage("sprites/realbg.png");
+    mazeImg = loadImage("sprites/maze.png");
+}
 
 function setup(){
     var canvas = createCanvas(400,400);
-    engine = Engine.create();
-    world = engine.world;
-
-    box1 = new Box(200,300,50,50);
-    box2 = new Box(240,100,50,100);
-    ground = new Ground(200,height,400,20)
+    bg = createSprite(200,200,400,400);
+    bg.addImage(bgImg);
+    bg.scale = 1.6;
+    //bg.addImage(mazeImg);
+    player = createSprite(130,180,15,15);
+    player.addImage(playerImg);
+    player.scale = 0.1596;
+    nplayer = createSprite(323,214,15,15);
+    nplayer.addImage(nplayerImg);
+    nplayer.scale = 0.1596;
 }
 
 function draw(){
-    background(0);
-    Engine.update(engine);
-    console.log(box2.body.position.x);
-    console.log(box2.body.position.y);
-    console.log(box2.body.angle);
-    box1.display();
-    box2.display();
-    ground.display();
+    background("black");
+    if (keyDown(DOWN_ARROW)){
+        player.y = player.y + 5;
+    }
+    if (keyDown(UP_ARROW)){
+        player.y = player.y - 5;
+    }
+    if (keyDown(RIGHT_ARROW)){
+        player.x = player.x + 5;
+    }
+    if (keyDown(LEFT_ARROW)){
+        player.x = player.x - 5;
+    }
+
+    if (player.isTouching(nplayer)){
+        bg.addImage(mazeImg);
+        bg.scale = 1.3;
+        player.scale = 0.11133;
+    }
+    drawSprites();
 }
