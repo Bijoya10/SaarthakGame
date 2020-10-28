@@ -21,10 +21,10 @@ function setup(){
     bg.addImage(bgImg);
     bg.scale = 1.6;
     //bg.addImage(mazeImg);
-    player = createSprite(130,180,15,15);
+    player = createSprite(470,305,15,15);
     player.addImage(playerImg);
     player.scale = 0.1596;
-    nplayer = createSprite(323,214,15,15);
+    nplayer = createSprite(1095,430,15,15);
     nplayer.addImage(nplayerImg);
     nplayer.scale = 0.1596;
     invisible1 = createSprite(1115,-20, 135,96);
@@ -43,13 +43,15 @@ function setup(){
     invisible13 = createSprite(609.8,272,170,820);
     invisible14 = createSprite(615.2,-52,465,160);
     invisible15 = createSprite(1114.6,-217,175,185);
+    nPlayerEnd = createSprite(100,203,40,40);
+    gameSprite = createSprite(100,100,50,160);
 
 }
 
 function draw(){
     background("black");
-    console.log(player.x);
-    console.log(player.y);
+    //console.log(player.x);
+    //console.log(player.y);
     if (keyDown(DOWN_ARROW)){
         player.y = player.y + 5;
         player.addImage(playerImg);
@@ -74,6 +76,11 @@ function draw(){
         
     }
     if (gameState === 0){
+        bg.x = width/2; //700
+        bg.y = height/2; //300
+        
+        player.scale = 0.5;
+       nplayer.scale = 0.5;
         invisible2.visible = false;
         invisible3.visible = false;
         invisible4.visible = false;
@@ -88,27 +95,17 @@ function draw(){
         invisible13.visible = false;
         invisible14.visible = false;
         invisible15.visible = false;
+        nPlayerEnd.visible = false;
+        gameSprite.visible = false;
+        bg.scale = 5;
     }
     if (gameState === 1){
+        bg.x = 200;
+        bg.y = 200;
         bg.addImage(mazeImg);
         bg.scale = 7;
         nplayer.destroy();
         player.scale = 0.4998645678;
-        invisible2.visible = false;
-        invisible3.visible = false;
-        invisible4.visible = false;
-        invisible5.visible = false;
-        invisible6.visible = false;
-        invisible7.visible = false;
-        invisible8.visible = false;
-        invisible9.visible = false;
-        invisible10.visible = false;
-        invisible11.visible = false;
-        invisible12.visible = false;
-        invisible13.visible = false;
-        invisible14.visible = false;
-        invisible15.visible = false;
-        nplayer.visible = false;
         
         camera.position.x = player.x;
         camera.position.y = player.y;
@@ -127,22 +124,6 @@ function draw(){
         player.collide(invisible13);
         player.collide(invisible14);
         player.collide(invisible15);
-
-        invisible2.visible = false;
-        invisible3.visible = false;
-        invisible4.visible = false;
-        invisible5.visible = false;
-        invisible6.visible = false;
-        invisible7.visible = false;
-        invisible8.visible = false;
-        invisible9.visible = false;
-        invisible10.visible = false;
-        invisible11.visible = false;
-        invisible12.visible = false;
-        invisible13.visible = false;
-        invisible14.visible = false;
-        invisible15.visible = false;
-    
 
         
     }
@@ -171,10 +152,32 @@ function draw(){
         invisible13.destroy();
         invisible14.destroy();
         invisible15.destroy();
+        nPlayerEnd.visible = false;
+        gameSprite.visible = false;
+        
+        if (gameState === 2 && player.isTouching(nPlayerEnd)){
+            gameState = 3;
+        }
 
         player.scale = 0.62233498701;
         camera.position.x = player.x;
         camera.position.y = player.y;
+    }
+
+    if(gameState === 3){
+        bg.destroy();
+        background("black");
+        gameSprite.visible = true;
+        
+        stroke("yellow");
+        strokeWeight(3);
+        textSize(25);
+        textFont("Verdana");
+        text("Thanks _____ for helping us out!",300,100);
+        fill("cyan");
+        
+
+        
     }
     drawSprites();
 }
