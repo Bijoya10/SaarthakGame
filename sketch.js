@@ -3,6 +3,7 @@ var gameState = 0;
 var player,playerImg,playerImg2,playerImg3,playerImg4;
 var bg, bgImg, mazeImg, tileImg;
 var nplayer1, nplayerImg;
+var mazeGroup;
 
 function preload (){
     playerImg = loadImage("sprites/playerFront.png");
@@ -47,6 +48,22 @@ function setup(){
 
     nPlayerEnd = createSprite(100,203,40,40);
     gameSprite = createSprite(100,100,50,160);
+
+    mazeGroup= new Group();
+    mazeGroup.add(invisible2);
+    mazeGroup.add(invisible3);
+    mazeGroup.add(invisible4);
+    mazeGroup.add(invisible5);
+    mazeGroup.add(invisible6);
+    mazeGroup.add(invisible7);
+    mazeGroup.add(invisible8);
+    mazeGroup.add(invisible9);
+    mazeGroup.add(invisible10);
+    mazeGroup.add(invisible11);
+    mazeGroup.add(invisible12);
+    mazeGroup.add(invisible13);
+    mazeGroup.add(invisible14);
+    mazeGroup.add(invisible15);
 }
 
 function draw(){
@@ -65,7 +82,7 @@ function draw(){
         
         player.scale = 0.5;
         nplayer.scale = 0.5;
-        makeMazeInvisible();
+        mazeGroup.setVisibleEach(false);
         nPlayerEnd.visible = false;
         gameSprite.visible = false;
         bg.scale = 5;
@@ -82,7 +99,7 @@ function draw(){
         camera.position.x = player.x;
         camera.position.y = player.y;
 
-        playerCollideMaze();        
+        player.collide(mazeGroup);        
     }
 
     if ( gameState === 1 && player.isTouching(invisible1)){
@@ -96,7 +113,7 @@ function draw(){
     if(gameState === 2){
         bg.addImage(tileImg);
         invisible1.visible = false;
-        destroyMazeSprites();
+        mazeGroup.destroyEach();
         nPlayerEnd.visible = false;
         gameSprite.visible = false;
         
@@ -124,23 +141,6 @@ function draw(){
     drawSprites();
 }
 
-function makeMazeInvisible(){
-        invisible2.visible = false;
-        invisible3.visible = false;
-        invisible4.visible = false;
-        invisible5.visible = false;
-        invisible6.visible = false;
-        invisible7.visible = false;
-        invisible8.visible = false;
-        invisible9.visible = false;
-        invisible10.visible = false;
-        invisible11.visible = false;
-        invisible12.visible = false;
-        invisible13.visible = false;
-        invisible14.visible = false;
-        invisible15.visible = false;
-        
-}
 
 function playerControls(){
     if (keyDown(DOWN_ARROW)){
@@ -161,36 +161,4 @@ function playerControls(){
     }
 }
 
-function playerCollideMaze(){
-        player.collide(invisible2);
-        player.collide(invisible3);
-        player.collide(invisible4);
-        player.collide(invisible5);
-        player.collide(invisible6);
-        player.collide(invisible7);
-        player.collide(invisible8);
-        player.collide(invisible9);
-        player.collide(invisible10);
-        player.collide(invisible11);
-        player.collide(invisible12);
-        player.collide(invisible13);
-        player.collide(invisible14);
-        player.collide(invisible15);
-}
-function destroyMazeSprites(){
-    invisible1.destroy();
-    invisible2.destroy();
-    invisible3.destroy();
-    invisible4.destroy();
-    invisible5.destroy();
-    invisible6.destroy();
-    invisible7.destroy();
-    invisible8.destroy();
-    invisible9.destroy();
-    invisible10.destroy();
-    invisible11.destroy();
-    invisible12.destroy();
-    invisible13.destroy();
-    invisible14.destroy();
-    invisible15.destroy();
-}
+
